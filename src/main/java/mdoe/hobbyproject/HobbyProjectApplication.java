@@ -1,4 +1,4 @@
-package mdoe.hobby.hobbyproject;
+package mdoe.hobbyproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
