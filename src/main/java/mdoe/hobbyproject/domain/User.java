@@ -1,69 +1,92 @@
 package mdoe.hobbyproject.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "user_app")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+@Table(name = "user")
+public class User extends  AbstractDomainClass{
 
-    @Version
-    private Integer version;
+    private String username;
 
-    private String firstName;
-    private String lastName;
-    private Date creationDate;
+    @Transient
+    private String password;
 
-    public Integer getId() {
-        return id;
+    private String encryptedPassword;
+    private Boolean enabled = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
+    // ~ defaults to @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "user_id"),
+    //     inverseJoinColumns = @joinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
+    private Integer failedLoginAttempts = 0;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Integer getVersion() {
-        return version;
+    public String getPassword() {
+        return password;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", version=" + version +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void addRole(Role role){
+        if(!this.roles.contains(role)){
+            this.roles.add(role);
+        }
+
+        if(!role.getUsers().contains(this)){
+            role.getUsers().add(this);
+        }
+    }
+
+    public void removeRole(Role role){
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
+    public Integer getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(Integer failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
     }
 }

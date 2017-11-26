@@ -28,9 +28,15 @@ public class ProductController {
 
     @RequestMapping("product/{id}")
     public String showProduct(@PathVariable Integer id, Model model){
-        model.addAttribute("product", productService.getProductById(id));
-        return "productshow";
-    }
+        Product productEntity  =  productService.getProductById(id);
+        if (productEntity == null){
+            System.out.println("was here");
+            return "index";
+        }
+        else {
+            model.addAttribute("product", productEntity);
+            return "productshow";
+        }}
 
     @RequestMapping("product/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
