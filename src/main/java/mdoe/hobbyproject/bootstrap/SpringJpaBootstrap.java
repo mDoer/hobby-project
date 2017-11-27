@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -81,14 +80,11 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     }
 
     private void assignUsersToUserRole() {
-        List<Role> roles = (List<Role>) roleService.listAll();
-        List<User> users = (List<User>) userService.listAll();
 
     }
 
     private void assignUsersToAdminRole() {
-        List<Role> roles = (List<Role>) roleService.listAll();
-        List<User> users = (List<User>) userService.listAll();
+
 
 
     }

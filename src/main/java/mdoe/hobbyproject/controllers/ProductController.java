@@ -22,7 +22,6 @@ public class ProductController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("products", productService.listAllProducts());
-        System.out.println("Returning products:");
         return "products";
     }
 
@@ -30,7 +29,6 @@ public class ProductController {
     public String showProduct(@PathVariable Integer id, Model model){
         Product productEntity  =  productService.getProductById(id);
         if (productEntity == null){
-            System.out.println("was here");
             return "index";
         }
         else {
