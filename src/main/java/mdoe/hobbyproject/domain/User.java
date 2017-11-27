@@ -13,6 +13,9 @@ public class User extends  AbstractDomainClass{
 
     private String username;
 
+    private String firstName;
+    private String lastName;
+
     @Transient
     private String password;
 
@@ -58,6 +61,21 @@ public class User extends  AbstractDomainClass{
         this.enabled = enabled;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public List<Role> getRoles() {
         return roles;

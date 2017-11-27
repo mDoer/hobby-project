@@ -1,4 +1,6 @@
 package mdoe.hobbyproject.services;
 
-public interface RoleService extends CRUDService {
+import mdoe.hobbyproject.domain.Role;
+
+public interface RoleService extends CRUDService<Role> {
 }

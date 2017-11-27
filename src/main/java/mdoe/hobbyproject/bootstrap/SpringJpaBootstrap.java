@@ -56,11 +56,15 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         User user1 = new User();
         user1.setUsername("user");
         user1.setPassword("user");
+        user1.setFirstName("simple");
+        user1.setLastName("user");
         userService.saveOrUpdate(user1);
 
         User user2 = new User();
         user2.setUsername("admin");
         user2.setPassword("admin");
+        user1.setFirstName("super");
+        user1.setLastName("admin");
         userService.saveOrUpdate(user2);
 
     }
@@ -75,12 +79,13 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         roleService.saveOrUpdate(adminRole);
         log.info("Saved role" + adminRole.getRole());
     }
+
     private void assignUsersToUserRole() {
         List<Role> roles = (List<Role>) roleService.listAll();
         List<User> users = (List<User>) userService.listAll();
 
-
     }
+
     private void assignUsersToAdminRole() {
         List<Role> roles = (List<Role>) roleService.listAll();
         List<User> users = (List<User>) userService.listAll();
