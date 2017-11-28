@@ -81,6 +81,9 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
 
     private void assignUsersToUserRole() {
 
+        User user1 = userService.getById(1);
+        user1.addRole(roleService.getById(1));
+        userService.saveOrUpdate(user1);
     }
 
     private void assignUsersToAdminRole() {

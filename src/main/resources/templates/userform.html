@@ -37,15 +37,19 @@
                     <p class="form-control-static" th:text="${user.lastUpdated}">Modified:</p>
                 </div>
             </div>
-            <div  class="form-group">
+
+            <div class="form-group">
                 <label class="col-sm-2 control-label">Select Role</label>
-                <div class="col-sm-10">
-                    <select class="form-control" id="role" name="role">
-                        <option th:each="role : ${roles}"
-                                th:value="${role.role}"
-                                th:text="${role.role}"></option>
-                    </select>
+                <div class="col-sm-2">
+                    <th:block th:each="role: ${roles}">
+                        <input type="checkbox" name="selectedRoles" th:value="${role.id}"/>
+                        <label th:text="${role.role}">
+                        </label>
+                    </th:block>
                 </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
             </div>
         </form>
     </div>
@@ -53,5 +57,3 @@
 
 </body>
 </html>
-
-

@@ -83,11 +83,11 @@ public class User extends  AbstractDomainClass{
     }
 
     public void addRole(Role role){
-        if(!this.roles.contains(role)){
+        if(!this.hasRole(role)){
             this.roles.add(role);
         }
 
-        if(!role.getUsers().contains(this)){
+        if(!role.hasUser(this)){
             role.getUsers().add(this);
         }
     }
@@ -103,5 +103,9 @@ public class User extends  AbstractDomainClass{
 
     public void setFailedLoginAttempts(Integer failedLoginAttempts) {
         this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public boolean hasRole(Role role){
+        return this.getRoles().stream().anyMatch(o -> o.getId().equals(role.id));
     }
 }

@@ -33,7 +33,7 @@ public class Role extends AbstractDomainClass {
     }
 
     public void addUser(User user) {
-        if (!this.users.contains(user)) {
+        if (!this.hasUser(user)) {
             this.users.add(user);
         }
 
@@ -46,4 +46,9 @@ public class Role extends AbstractDomainClass {
         this.users.remove(user);
         user.getRoles().remove(this);
     }
+
+    public boolean hasUser(User user) {
+        return this.getUsers().stream().anyMatch(o -> o.getId().equals(user.id));
+    }
+
 }
