@@ -1,6 +1,7 @@
 package mdoe.hobbyproject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +9,13 @@ import java.util.List;
 @Table(name = "user")
 public class User extends  AbstractDomainClass{
 
+    @NotNull
     private String username;
 
+    @NotNull
     private String firstName;
+
+    @NotNull
     private String lastName;
 
     @Transient
@@ -93,8 +98,10 @@ public class User extends  AbstractDomainClass{
     }
 
     public void removeRole(Role role){
-        this.roles.remove(role);
-        role.getUsers().remove(this);
+        if (this.hasRole(role)){
+            this.getRoles().removeIf(item -> item.getId().equals(role.getId()));
+            role.removeUser(this);
+        }
     }
 
     public Integer getFailedLoginAttempts() {

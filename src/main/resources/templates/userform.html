@@ -42,7 +42,7 @@
                 <label class="col-sm-2 control-label">Select Role</label>
                 <div class="col-sm-2">
                     <th:block th:each="role: ${roles}">
-                        <input type="checkbox" name="selectedRoles" th:value="${role.id}"/>
+                        <input type="checkbox" th:checked="${user.hasRole(role)}" name="selectedRoles" th:value="${role.id}"/>
                         <label th:text="${role.role}">
                         </label>
                     </th:block>

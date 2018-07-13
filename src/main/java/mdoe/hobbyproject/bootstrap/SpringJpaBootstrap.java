@@ -5,6 +5,7 @@ import mdoe.hobbyproject.domain.User;
 import mdoe.hobbyproject.repositories.ProductRepository;
 import mdoe.hobbyproject.services.RoleService;
 import mdoe.hobbyproject.services.UserService;
+import mdoe.hobbyproject.services.security.EncryptionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -19,6 +20,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     private ProductRepository productRepository;
     private UserService userService;
     private RoleService roleService;
+    private EncryptionService encryptionService;
 
     private Logger log = Logger.getLogger(SpringJpaBootstrap.class);
 
@@ -35,6 +37,11 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     @Autowired
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
+    }
+
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
     }
 
 
@@ -55,6 +62,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         User user1 = new User();
         user1.setUsername("user");
         user1.setPassword("user");
+        user1.setEncryptedPassword(encryptionService.encryptString(user1.getPassword()));
         user1.setFirstName("simple");
         user1.setLastName("user");
         userService.saveOrUpdate(user1);
@@ -62,8 +70,8 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         User user2 = new User();
         user2.setUsername("admin");
         user2.setPassword("admin");
-        user1.setFirstName("super");
-        user1.setLastName("admin");
+        user2.setFirstName("super");
+        user2.setLastName("admin");
         userService.saveOrUpdate(user2);
 
     }

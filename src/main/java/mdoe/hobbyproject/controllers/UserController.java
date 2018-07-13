@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @SessionAttributes("user")
@@ -35,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping("user/edit/{id}")
-    public String edit( @PathVariable Integer id, Model model) {
+    public String edit(@PathVariable Integer id, Model model) {
         model.addAttribute("user", userService.getById(id));
         model.addAttribute("roles", roleService.listAll());
         return "userform";
@@ -49,17 +52,23 @@ public class UserController {
 
     @RequestMapping(value = "user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user,
-                           @RequestParam(value = "selectedRoles", required = false) int[] selectedRoles,
+                           @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoles,
+                           Errors errors,
                            BindingResult bindingResult, Model model) {
 
-        System.out.println(user +"userRoles" +user.getRoles());
-
-
-        for (int selectedRoleID : selectedRoles) {
-            Role selectedRole = roleService.getById(selectedRoleID);
-            user.addRole(selectedRole);
-            roleService.saveOrUpdate(selectedRole);
+        if (selectedRoles != null) {
+            roleService.listAll().forEach(item -> {
+                if (selectedRoles.contains(item.getId())) {
+                    Role selectedRole = roleService.getById(item.getId());
+                    user.addRole(selectedRole);
+                } else {
+                    Role selectedRole = roleService.getById(item.getId());
+                    user.removeRole(selectedRole);
+                }
+            });
         }
+
+
         userService.saveOrUpdate(user);
 
         return "redirect:/user/" + user.getId();

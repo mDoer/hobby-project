@@ -1,5 +1,6 @@
 package mdoe.hobbyproject.services;
 
+import mdoe.hobbyproject.domain.DomainObject;
 import mdoe.hobbyproject.domain.User;
 import mdoe.hobbyproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<?> listAll() {
+    public List<User> listAll() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add); //fun with Java 8
         return users;

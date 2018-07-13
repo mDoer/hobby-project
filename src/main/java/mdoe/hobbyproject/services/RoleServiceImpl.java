@@ -1,5 +1,6 @@
 package mdoe.hobbyproject.services;
 
+import mdoe.hobbyproject.domain.DomainObject;
 import mdoe.hobbyproject.domain.Role;
 import mdoe.hobbyproject.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<?> listAll() {
+    public List<Role> listAll() {
         List<Role> roles = new ArrayList<>();
         roleRepository.findAll().forEach(roles::add);
         return roles;

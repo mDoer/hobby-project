@@ -43,8 +43,12 @@ public class Role extends AbstractDomainClass {
     }
 
     public void removeUser(User user) {
-        this.users.remove(user);
-        user.getRoles().remove(this);
+        if(this.hasUser(user)){
+            this.getUsers().removeIf(item -> item.getId().equals(user.getId()));
+            user.getRoles().remove(this);
+        }
+
+
     }
 
     public boolean hasUser(User user) {
